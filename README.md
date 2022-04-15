@@ -3,6 +3,9 @@ Gitmoji Bash Script
 - [gitmoji-sh](#gitmoji-sh)
   - [Abstact](#abstact)
   - [Quick Example](#quick-example)
+  - [Installation](#installation)
+    - [.bashrc](#bashrc)
+    - [.bash_profile](#bash_profile)
   - [Help](#help)
   - [Options](#options)
 
@@ -27,6 +30,27 @@ gitmoji -e comments -m "Improving comments in source code"
         No: N/n
 
     Enter selection >
+
+## Installation
+Download the file and save it in `one` of the locations:
+- personal use: `~/bin`
+- everyone: `~/usr/local/bin`
+- sys admin: `~/usr/local/sbin`
+
+Then edit you .bashrc and .bash_profile files to include the following
+### .bashrc
+```sh
+alias gitmoji='~/localsh/gitmoji.sh'
+```
+### .bash_profile
+```sh
+# Source the ~/.bashrc file if it exists
+if [ -f ~/.bashrc ]
+then
+    . ~/.bashrc
+fi
+```
+
 ## Help
 ```sh
 gitmoji.sh -h
