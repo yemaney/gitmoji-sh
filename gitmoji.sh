@@ -11,7 +11,14 @@ usage () {
     Available options:
 
     -h, --help      Print this help and exit
-    -o, --options   Print all emoji options
+    -o, --options   Print all emoji options and exit
+    -e, --emoji     emoji to use in commit message
+    -m, --message   message to use in commit message
+
+    Example:
+
+    $ gitmoji -e comments -m "Improving comments in source code"
+
 EOF
     
     exit
