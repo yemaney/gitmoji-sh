@@ -130,7 +130,7 @@ message_maker() {
     return 0
 }
 
-commit() {
+commit() { # shows changes and commits with gitmoji message if Y/y is selected
     git status -s -b
     
     echo "
