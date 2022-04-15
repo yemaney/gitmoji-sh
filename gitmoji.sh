@@ -14,4 +14,19 @@ EOF
     exit
 }
 
-usage
+
+parse_params () {
+    while :; do
+        case "${1-}" in
+            -h | --help) usage ;;
+            -?*) die "Unknown option: $1" ;;
+            *) break ;;
+        esac
+        shift
+    done
+    
+    args=("$@")
+}
+
+
+parse_params "$@"
