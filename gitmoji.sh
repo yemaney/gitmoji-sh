@@ -53,7 +53,7 @@ parse_params () { # parses flags and controls which functio gets called
         case "${1-}" in
             -h | --help) usage ;;
             -o | --verbose) options ;;
-            -?*) die "Unknown option: $1" ;;
+            -?*) echo "Unknown option: {$1}" ;;
             *) break ;;
         esac
         shift
