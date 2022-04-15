@@ -48,8 +48,7 @@ EOF
 }
 
 emoji_selector () { # selects emoji given input
-    emoji="$1"
-    case "$2" in
+    case "$1" in
         structure) emoji=🎨 ;;
         performance) emoji=⚡️ ;;
         remove) emoji=🔥 ;;
@@ -119,24 +118,39 @@ emoji_selector () { # selects emoji given input
         deprecate) emoji=🗑️ ;;
         auth) emoji=🛂 ;;
         simplefix) emoji=🩹 ;;
-        inspect) emoji=🧐
+        inspect) emoji=🧐 ;;
+        *) emoji="none"
     esac
     return 0
 }
 
+
+message_maker() {
+    message="$1"
+return 0
+}
+
+
 parse_params () { # parses flags and controls which functio gets called
     emoji=''
+    message=''
     while :; do
         case "${1-}" in
             -h | --help) usage ;;
             -o | --verbose) options ;;
-            -e | --emoji) emoji_selector "$emoji" "$2" ;;
+            -e | --emoji) emoji_selector "$2" 
+                shift 
+                ;;
+            -m | --message) message_maker "$2" 
+                shift
+                ;;
             -?*) echo "Unknown option: {$1}" ;;
             *) break ;;
         esac
         shift
     done
-    echo "Selected $emoji"
+
+    echo "$emoji : $message"
     args=("$@")
 }
 
