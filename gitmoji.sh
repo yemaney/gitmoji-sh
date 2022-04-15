@@ -127,7 +127,30 @@ emoji_selector () { # selects emoji given input
 
 message_maker() {
     message="$1"
-return 0
+    return 0
+}
+
+commit() {
+    git status -s -b
+    
+    echo "
+
+    Would you like to commit these changes with the message:
+    "$emoji : $message"
+
+    Yes: Y/y
+    No: N/n
+    "
+    read -p "Enter selection > "
+    
+    case $REPLY in
+        Y | y)
+            git commit -m "$emoji : $message"
+        ;;
+        *)
+            exit 1
+        ;;
+    esac
 }
 
 
@@ -138,20 +161,22 @@ parse_params () { # parses flags and controls which functio gets called
         case "${1-}" in
             -h | --help) usage ;;
             -o | --verbose) options ;;
-            -e | --emoji) emoji_selector "$2" 
-                shift 
-                ;;
-            -m | --message) message_maker "$2" 
+            -e | --emoji) emoji_selector "$2"
                 shift
-                ;;
+            ;;
+            -m | --message) message_maker "$2"
+                shift
+            ;;
             -?*) echo "Unknown option: {$1}" ;;
             *) break ;;
         esac
         shift
     done
-
-    echo "$emoji : $message"
+    
+    
     args=("$@")
+    
+    commit
 }
 
 parse_params "$@"
