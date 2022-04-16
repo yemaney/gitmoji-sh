@@ -32,15 +32,13 @@ gitmoji -e comments -m "Improving comments in source code"
     Enter selection >
 
 ## Installation
-Download the file and save it in `one` of the locations:
-- personal use: `~/bin`
-- everyone: `~/usr/local/bin`
-- sys admin: `~/usr/local/sbin`
+Download the file and save it to:
+- `~/usr/local/bin`
 
-Then edit you .bashrc and .bash_profile files to include the following
+Then edit your .bashrc and .bash_profile files to include the following
 ### .bashrc
 ```sh
-alias gitmoji='~/localsh/gitmoji.sh'
+alias gitmoji='~/usr/local/bin/gitmoji.sh'
 ```
 ### .bash_profile
 ```sh
@@ -53,12 +51,13 @@ fi
 
 ## Help
 ```sh
-gitmoji.sh -h
+gitmoji -h
 ```
-    Usage: gitmoji.sh [-h] [-o]
 
     Gitmoji is bash script, designed to help with using emoji in git commit messages.
     The available emoji's are consistent with the https://gitmoji.dev/ project.
+
+    Usage: gitmoji.sh [-e emoji] [-m "commit message"]
 
     Available options:
 
@@ -67,13 +66,9 @@ gitmoji.sh -h
     -e, --emoji     emoji to use in commit message
     -m, --message   message to use in commit message
 
-    Example:
-
-    $ gitmoji -e comments -m "Improving comments in source code"
-
 ## Options
 ```sh
-gitmoji.sh -o
+gitmoji -o
 ```
 
     🎨 structure     💄 ui              💚 fixci             ➖ remdep

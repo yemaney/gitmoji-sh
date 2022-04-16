@@ -3,10 +3,10 @@
 usage () {
     cat << EOF # describes script usage, triggerred by -h | --help
 
-    Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-o]
-
     Gitmoji is bash script, designed to help with using emoji in git commit messages.
     The available emoji's are consistent with the https://gitmoji.dev/ project.
+
+    Usage: $(basename "${BASH_SOURCE[0]}") [-e emoji] [-m "commit message"]
 
     Available options:
 
@@ -14,11 +14,6 @@ usage () {
     -o, --options   Print all emoji options and exit
     -e, --emoji     emoji to use in commit message
     -m, --message   message to use in commit message
-
-    Example:
-
-    $ gitmoji -e comments -m "Improving comments in source code"
-
 EOF
     
     exit
