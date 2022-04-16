@@ -163,7 +163,7 @@ die() { # exit the program and print a message when an erorr has occurred
 catch_errors() { # catch errros with emoji or message Options
     if [ "$emoji" == "none" ]; then
         die "Error: $emojicode is not a valid emoji code. Try gitmoji -o for more information."
-    elif ["$message" == '']; then
+    elif [ "$message" == '' ]; then
         die "Error: commit message was empty. Try gitmoji -h for more information."
     fi
 }
