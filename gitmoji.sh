@@ -49,6 +49,7 @@ EOF
     exit
 }
 
+
 emoji_selector () { # selects emoji given input
     case "$1" in
         structure) emoji=🎨 ;;
@@ -121,16 +122,12 @@ emoji_selector () { # selects emoji given input
         auth) emoji=🛂 ;;
         simplefix) emoji=🩹 ;;
         inspect) emoji=🧐 ;;
-        *) emoji="none"
+        *) emojicode=$1
+            emoji="none" ;;
     esac
     return 0
 }
 
-
-message_maker() {
-    message="$1"
-    return 0
-}
 
 commit() { # shows changes and commits with gitmoji message if Y/y is selected
     git status -s -b
@@ -156,29 +153,52 @@ commit() { # shows changes and commits with gitmoji message if Y/y is selected
 }
 
 
+die() { # exit the program and print a message when an erorr has occurred
+    msg=$1
+    echo "$msg"
+    exit 1
+}
+
+
+catch_errors() { # catch errros with emoji or message Options
+    if [ "$emoji" == "none" ]; then
+        die "Error: $emojicode is not a valid emoji code. Try gitmoji -o for more information."
+    elif ["$message" == '']; then
+        die "Error: commit message was empty. Try gitmoji -h for more information."
+    fi
+}
+
+
 parse_params () { # parses flags and controls which functio gets called
+    emojicode=''
     emoji=''
     message=''
     while :; do
         case "${1-}" in
             -h | --help) usage ;;
-            -o | --verbose) options ;;
-            -e | --emoji) emoji_selector "$2"
+            -o | --options) options ;;
+            -e | --emoji) 
+                emoji_selector "$2"
                 shift
             ;;
-            -m | --message) message_maker "$2"
+            -m | --message) 
+                message="$2"
                 shift
             ;;
-            -?*) echo "Unknown option: {$1}" ;;
-            *) break ;;
+            -?*)
+                 die "Error: $1 is an invalid option:. Try gitmoji -h for more information.";;
+            *) 
+                break ;;
         esac
         shift
     done
     
-    
+    catch_errors
+
     args=("$@")
     
     commit
 }
+
 
 parse_params "$@"
