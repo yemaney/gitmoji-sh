@@ -130,7 +130,7 @@ emoji_selector () { # selects emoji given input
 
 
 commit() { # shows changes and commits with gitmoji message if Y/y is selected
-    git status -s -b
+    git diff --name-status --staged 
     
     echo "
 
