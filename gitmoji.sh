@@ -1,4 +1,4 @@
-#!/bin//bash
+#!/bin/bash
 
 usage () {
     cat << EOF # describes script usage, triggerred by -h | --help
