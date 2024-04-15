@@ -65,6 +65,7 @@ gitmoji -h
     -o, --options   Print all emoji options and exit
     -e, --emoji     emoji to use in commit message
     -m, --message   message to use in commit message
+    -s, --sign      Sign the commit using GPG
 
 ## Options
 ```sh

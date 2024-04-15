@@ -14,8 +14,9 @@ usage () {
     -o, --options   Print all emoji options and exit
     -e, --emoji     emoji to use in commit message
     -m, --message   message to use in commit message
+    -s, --sign      Sign the commit using GPG
 EOF
-    
+
     exit
 }
 
@@ -45,7 +46,7 @@ options () {
     🧱 infra
     🧑‍💻 devx
 EOF
-    
+
     exit
 }
 
@@ -131,7 +132,7 @@ emoji_selector () { # selects emoji given input
 
 commit() { # shows changes and commits with gitmoji message if Y/y is selected
     git diff --name-status --staged 
-    
+
     echo "
 
     Would you like to commit these changes with the message:
@@ -141,13 +142,14 @@ commit() { # shows changes and commits with gitmoji message if Y/y is selected
     No: N/n
     "
     read -p "Enter selection > "
-    
+
     case $REPLY in
         Y | y)
-            git commit -m "$emoji : $message"
-        ;;
-        *)
-            exit 1
+            if [ "$sign" = true ]; then
+                git commit -S -m "$emoji : $message"
+            else
+                git commit -m "$emoji : $message"
+            fi
         ;;
     esac
 }
@@ -170,6 +172,7 @@ catch_errors() { # catch errros with emoji or message Options
 
 
 parse_params () { # parses flags and controls which functio gets called
+    sign=false
     emojicode=''
     emoji=''
     message=''
@@ -185,6 +188,9 @@ parse_params () { # parses flags and controls which functio gets called
                 message="$2"
                 shift
             ;;
+            -s | --sign)
+                sign=true
+            ;;
             -?*)
                  die "Error: $1 is an invalid option:. Try gitmoji -h for more information.";;
             *) 
@@ -192,11 +198,11 @@ parse_params () { # parses flags and controls which functio gets called
         esac
         shift
     done
-    
+
     catch_errors
 
     args=("$@")
-    
+
     commit
 }
 
